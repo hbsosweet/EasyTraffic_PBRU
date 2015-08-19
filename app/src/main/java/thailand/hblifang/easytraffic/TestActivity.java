@@ -1,5 +1,8 @@
 package thailand.hblifang.easytraffic;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -21,7 +24,7 @@ public class TestActivity extends AppCompatActivity {
             choice3RadioButton, choice4RadioButton;
     private String[] questionStrings;
     private int[] imageInts;
-    private int radioAnInt, indexAnInt;
+    private int radioAnInt, indexAnInt, scoreAnInt;
 
 
     @Override
@@ -45,6 +48,8 @@ public class TestActivity extends AppCompatActivity {
 
         } else {
 
+            checkScore();
+
             myModel();
 
         }
@@ -59,11 +64,26 @@ public class TestActivity extends AppCompatActivity {
 
         } else {
 
+            //Check Score
+            checkScore();
+
             indexAnInt += 1;
 
             //Chang View
             changeView(indexAnInt);
 
+            //Clear Check
+            choiceRadioGroup.clearCheck();
+
+        }
+
+    }
+
+    private void checkScore() {
+
+        int[] intTrueAnswer = {1, 2, 3, 4, 1, 2, 3, 4, 1, 2};
+        if (radioAnInt == intTrueAnswer[indexAnInt]) {
+            scoreAnInt++;
         }
 
     }
@@ -88,7 +108,33 @@ public class TestActivity extends AppCompatActivity {
 
     private void showAnswerDislog() {
 
-    }
+        AlertDialog.Builder objBuilder = new AlertDialog.Builder(this);
+        objBuilder.setIcon(R.drawable.icon_cow);
+        objBuilder.setTitle("คะแนนของคุณ");
+        objBuilder.setMessage("คะแนนที่คุณสอบได้" + Integer.toString(scoreAnInt) + " คะแนน");
+        objBuilder.setCancelable(false);
+        objBuilder.setNegativeButton("ลองอีกครั้ง", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onStart();
+                choiceRadioGroup.clearCheck();
+                dialog.dismiss();
+            }
+        });
+
+        objBuilder.show();
+
+        objBuilder.setPositiveButton("อ่านบทเรียน", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent objIntent = new Intent(TestActivity.this, MainActivity.class);
+                        startActivity(objIntent);
+                        dialog.dismiss();
+                    }
+                }
+
+        );
+    } //showAnswerDialog
 
     private void radioController() {
 
@@ -135,6 +181,9 @@ public class TestActivity extends AppCompatActivity {
         imageInts[7] = R.drawable.traffic_08;
         imageInts[8] = R.drawable.traffic_09;
         imageInts[9] = R.drawable.traffic_10;
+
+        indexAnInt = 0;
+        scoreAnInt = 0;
 
         String[] strChoice = getResources().getStringArray(R.array.times1);
 
