@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -17,10 +18,10 @@ public class TestActivity extends AppCompatActivity {
     private ImageView trafficImageView;
     private RadioGroup choiceRadioGroup;
     private RadioButton choice1RadioButton, choice2RadioButton,
-    choice3RadioButton, choice4RadioButton;
+            choice3RadioButton, choice4RadioButton;
     private String[] questionStrings;
     private int[] imageInts;
-    private int radioAnInt;
+    private int radioAnInt, indexAnInt;
 
 
     @Override
@@ -30,20 +31,64 @@ public class TestActivity extends AppCompatActivity {
 
         //Bind Widget
         bindWidget();
-        
+
         //Radio Controller
         radioController();
 
     } //onCreate
+
     public void clickAnswer(View view) {
 
-        if () {
-        
+        if (radioAnInt == 0) {
+
+            Toast.makeText(TestActivity.this, "กรุณาตอบคำถามด้วยค่ะ", Toast.LENGTH_SHORT).show();
+
         } else {
+
+            myModel();
 
         }
 
     } //clickAnswer
+
+    private void myModel() {
+
+        if (indexAnInt == 9) {
+
+            showAnswerDislog();
+
+        } else {
+
+            indexAnInt += 1;
+
+            //Chang View
+            changeView(indexAnInt);
+
+        }
+
+    }
+
+    private void changeView(int anInt) {
+
+        //Change Question
+        questionTextView.setText(questionStrings[anInt]);
+
+        //Change Image
+        trafficImageView.setImageResource(imageInts[anInt]);
+
+        //Change Choice
+        int[] intTimes = {R.array.times1, R.array.times2, R.array.times3, R.array.times4, R.array.times5,
+                R.array.times6, R.array.times7, R.array.times8, R.array.times9, R.array.times10,};
+        String[] strChoice = getResources().getStringArray(intTimes[anInt]);
+        choice1RadioButton.setText(strChoice[0]);
+        choice2RadioButton.setText(strChoice[1]);
+        choice3RadioButton.setText(strChoice[2]);
+        choice4RadioButton.setText(strChoice[3]);
+    } //Change View
+
+    private void showAnswerDislog() {
+
+    }
 
     private void radioController() {
 
@@ -106,7 +151,7 @@ public class TestActivity extends AppCompatActivity {
     private void bindWidget() {
         questionTextView = (TextView) findViewById(R.id.txtQuestion);
         trafficImageView = (ImageView) findViewById(R.id.imvTrafficTest);
-        choiceRadioGroup = (RadioGroup)findViewById(R.id.ragChoice);
+        choiceRadioGroup = (RadioGroup) findViewById(R.id.ragChoice);
         choice1RadioButton = (RadioButton) findViewById(R.id.radioButton);
         choice2RadioButton = (RadioButton) findViewById(R.id.radioButton2);
         choice3RadioButton = (RadioButton) findViewById(R.id.radioButton3);
