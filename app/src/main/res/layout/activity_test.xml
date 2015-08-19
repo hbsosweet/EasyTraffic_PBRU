@@ -71,7 +71,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:onClick="clickAnswer"
+        android:text="@string/answer"
         android:id="@+id/button2"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_alignParentBottom="true" />
