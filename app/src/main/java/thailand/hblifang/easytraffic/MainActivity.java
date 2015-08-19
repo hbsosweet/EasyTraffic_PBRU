@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     } // Main Method นี่คือ เมธอดหลัก เมธอดหลักควรจะเป็นตัว manager เพื่อให้ไม่ให้เกิดความยุ่งเหยิงเวลาโค้ด
 
+    public void clickTest(View view) { //void คือ เมธอดที่ไม่มีการรีเทิร์นค่ากลับไปหาสิ่งที่เรียก
+
+        startActivity(new Intent(this, TestActivity.class));
+
+    }
+
     private void createListView() {
 
         final String[] strTitle = new String[20];
